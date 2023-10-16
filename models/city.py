@@ -18,7 +18,7 @@ class City(models.base_model.BaseModel):
 
     Methods:
     """
-    state = ""
+    state_id = ""
     name = ""
 
     def __init__(self, *args, **kwargs):
