@@ -5,11 +5,8 @@
 Commandline interpreter Module
 for AirBnB clone Application
 """
-from models import storage
+from models import storage, standard_models
 import cmd
-import models.engine.file_storage as fstorage
-import models.base_model as bmodel
-import models.user as user
 import re
 import sys
 
@@ -21,10 +18,6 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     file = None
 
-    models = {bmodel.BaseModel.__name__: bmodel.BaseModel,
-              fstorage.FileStorage.__name__: fstorage.FileStorage,
-              user.User.__name__: user.User}
-
     def do_create(self, line):
         """
         Create an object of named class
@@ -32,18 +25,20 @@ class HBNBCommand(cmd.Cmd):
         """
         args = parse_args(line)
 
-        if not self.valid_classname(args):
-            return
-
+        if not args:
+            print("** class name missing **")
+            return False
+        if args[0] not in standard_models.keys():
+            print("** class doesn't exist **")
+            return False
         if len(args) > 1:
             print("** too many arguments **")
             return
         arg, *_ = args
 
-        new_model = self.models[arg]()
-        if new_model.__class__.__name__ in ('BaseModel'):
-            print(new_model.id)
-            new_model.save()
+        new_model = standard_models[arg]()
+        print(new_model.id)
+        new_model.save()
 
     def do_EOF(self, arg):
         """
@@ -64,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         ex: $ all BaseModel
         """
         args = parse_args(line)
-        if args and args[0] not in self.models.keys():
+        if args and args[0] not in standard_models.keys():
             print("** class doesn't exist **")
             return False
         models = []
@@ -89,24 +84,7 @@ class HBNBCommand(cmd.Cmd):
         model_name, model_id, *_ = args
         key = "{}.{}".format(model_name.strip(), model_id.strip())
         del storage.objects[key]
-
-    def do_get_object(self, arg):
-        """
-        Get file, object from database
-        """
-        pass
-
-    def do_new_place(self, arg):
-        """
-        Create new Place object
-        """
-        pass
-
-    def do_new_user(self, arg):
-        """
-        Create new User object
-        """
-        pass
+        storage.save()
 
     def do_quit(self, arg):
         """
@@ -160,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return False
-        if args[0] not in self.models.keys():
+        if args[0] not in standard_models.keys():
             print("** class doesn't exist **")
             return False
         if len(args) < 2:
