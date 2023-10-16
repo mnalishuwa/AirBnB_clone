@@ -148,7 +148,8 @@ class FileStorage:
         """
         with open(self.file_path, mode='w+', encoding='utf-8') as file_handle:
             objects_repr = {object_key: object_value.to_dict()
-                            for object_key, object_value in self.objects.items()}
+                            for object_key, object_value
+                            in self.objects.items()}
             objects_json = json.dumps(objects_repr)
             file_handle.write(objects_json)
 
@@ -162,8 +163,8 @@ class FileStorage:
             None
         """
         try:
-            with open(self.file_path, mode='r', encoding='utf-8') as file_handle:
-                objects_json = file_handle.read()
+            with open(self.file_path, mode='r', encoding='utf-8') as fhandle:
+                objects_json = fhandle.read()
                 objects_repr = json.loads(objects_json)
                 for repr_key, repr_value in objects_repr.items():
                     class_name = repr_value['__class__']

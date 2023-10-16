@@ -13,6 +13,7 @@ import models.user as user
 import re
 import sys
 
+
 class HBNBCommand(cmd.Cmd):
     """
     definition for airbnb clone shell console
@@ -44,7 +45,6 @@ class HBNBCommand(cmd.Cmd):
             print(new_model.id)
             new_model.save()
 
-
     def do_EOF(self, arg):
         """
         Exit shell with Ctrl-D
@@ -71,9 +71,10 @@ class HBNBCommand(cmd.Cmd):
         if args:
             arg, *_ = args
             models = [model.__str__() for key, model in storage.objects.items()
-                  if key.split(".")[0] == arg]
+                      if key.split(".")[0] == arg]
         else:
-            models = [model.__str__() for key, model in storage.objects.items()]
+            models = [model.__str__() for key, model
+                      in storage.objects.items()]
         print(models)
 
     def do_destroy(self, line):
@@ -175,6 +176,7 @@ class HBNBCommand(cmd.Cmd):
             return False
         return True
 
+
 def parse_args(line):
     """
     Split the args passed by Cmd
@@ -184,6 +186,7 @@ def parse_args(line):
     args = [arg.replace("'", "").replace('"', "")
             for arg in re.split(match_pattern, line) if arg.split()]
     return args
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
