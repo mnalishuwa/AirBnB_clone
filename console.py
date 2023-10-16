@@ -76,7 +76,19 @@ class HBNBCommand(cmd.Cmd):
         """
         Retrieve the number of instances of a class
         """
-        pass
+        args = parse_args(line)
+        if args and args[0] not in standard_models.keys():
+            print("** class doesn't exist **")
+            return False
+        models = []
+        if args:
+            arg, *_ = args
+            models = [1 for key, model in storage.objects.items()
+                      if key.split(".")[0] == arg]
+        else:
+            models = [1 for key, model
+                      in storage.objects.items()]
+        print(len(models))
 
     def do_destroy(self, line):
         """
@@ -175,10 +187,10 @@ class HBNBCommand(cmd.Cmd):
             print("** Unknown syntax: {}".format(args[0]))
             return
         commands = {'all': self.do_all,
-                   'count': self.do_count,
-                   'destroy': self.do_destroy,
-                   'show': self.do_show,
-                   'update':self.do_update}
+                    'count': self.do_count,
+                    'destroy': self.do_destroy,
+                    'show': self.do_show,
+                    'update': self.do_update}
 
         model_name = model_name.group(1)
         command = command.group(1)
@@ -187,12 +199,13 @@ class HBNBCommand(cmd.Cmd):
         else:
             new_args = ""
         new_line = "{} {}".format(model_name.strip(),
-                                     new_args.strip())
+                                  new_args.strip())
         try:
             commands[command](new_line)
         except KeyError:
             print("** command {} not found **".format(command))
             return
+
 
 def parse_args(line):
     """
