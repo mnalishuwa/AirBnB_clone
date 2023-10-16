@@ -9,7 +9,7 @@ JSON file to instances
 
 
 import json
-import models.base_model
+import models
 import os
 
 
@@ -166,8 +166,8 @@ class FileStorage:
                 objects_json = file_handle.read()
                 objects_repr = json.loads(objects_json)
                 for repr_key, repr_value in objects_repr.items():
-                    # object_repr = json.loads(repr_value)
-                    obj = models.base_model.BaseModel(**repr_value)
+                    class_name = repr_value['__class__']
+                    obj = models.standard_models[class_name](**repr_value)
                     self.new(obj)
         except FileNotFoundError:
             pass
