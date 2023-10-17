@@ -41,7 +41,6 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(User, 'first_name'))
         self.assertTrue(hasattr(User, 'last_name'))
 
-
     def test_attr_type(self):
         self.assertEqual(type(User.email), str)
         self.assertEqual(type(User.password), str)
