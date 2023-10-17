@@ -41,6 +41,13 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(User, 'first_name'))
         self.assertTrue(hasattr(User, 'last_name'))
 
+
+    def test_attr_type(self):
+        self.assertEqual(type(User.email), str)
+        self.assertEqual(type(User.password), str)
+        self.assertTrue(isinstance(self.userobject.first_name, str))
+        self.assertTrue(isinstance(self.userobject.last_name, str))
+
     def test_function_docs(self):
         self.assertIsNotNone(User.__doc__)
         self.assertIsNotNone(User.save.__doc__)
