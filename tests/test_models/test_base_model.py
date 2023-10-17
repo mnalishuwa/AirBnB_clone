@@ -25,12 +25,11 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(isinstance(self.baseobject, BaseModel))
 
     def test_attrs(self):
-        self.assertTrue(hasattr(BaseModel, 'id'))
-        self.assertTrue(hasattr(BaseModel, '__init__'))
-        self.assertTrue(hasattr(BaseModel, 'created_at'))
-        self.assertTrue(hasattr(BaseModel, 'updated_at'))
-        self.assertTrue(hasattr(BaseModel, 'save'))
-        self.assertTrue(hasattr(BaseModel, 'to_dict'))
+        self.assertTrue(hasattr(self.baseobject, 'id'))
+        self.assertTrue(hasattr(self.baseobject, 'created_at'))
+        self.assertTrue(hasattr(self.baseobject, 'updated_at'))
+        self.assertTrue(hasattr(self.baseobject, 'save'))
+        self.assertTrue(hasattr(self.baseobject, 'to_dict'))
 
     def test_function_docs(self):
         self.assertIsNotNone(BaseModel.__doc__)

@@ -30,12 +30,12 @@ class TestUser(unittest.TestCase):
                         and type(self.userobject) != BaseModel)
 
     def test_attrs(self):
-        self.assertTrue(hasattr(User, 'id'))
-        self.assertTrue(hasattr(User, '__init__'))
-        self.assertTrue(hasattr(User, 'created_at'))
-        self.assertTrue(hasattr(User, 'updated_at'))
-        self.assertTrue(hasattr(User, 'save'))
-        self.assertTrue(hasattr(User, 'to_dict'))
+        self.assertTrue(hasattr(self.userobject, 'id'))
+        self.assertTrue(hasattr(self.userobject, '__init__'))
+        self.assertTrue(hasattr(self.userobject, 'created_at'))
+        self.assertTrue(hasattr(self.userobject, 'updated_at'))
+        self.assertTrue(hasattr(self.userobject, 'save'))
+        self.assertTrue(hasattr(self.userobject, 'to_dict'))
         self.assertTrue(hasattr(User, 'email'))
         self.assertTrue(hasattr(User, 'password'))
         self.assertTrue(hasattr(User, 'first_name'))
